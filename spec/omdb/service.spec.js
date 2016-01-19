@@ -6,60 +6,17 @@ describe("omdb service", function() {
     
     var movieDataById = {"Title":"Star Wars: Episode IV - A New Hope","Year":"1977","Rated":"PG","Released":"25 May 1977","Runtime":"121 min","Genre":"Action, Adventure, Fantasy","Director":"George Lucas","Writer":"George Lucas","Actors":"Mark Hamill, Harrison Ford, Carrie Fisher, Peter Cushing","Plot":"Luke Skywalker joins forces with a Jedi Knight, a cocky pilot, a wookiee and two droids to save the universe from the Empire's world-destroying battle-station, while also attempting to rescue Princess Leia from the evil Darth Vader.","Language":"English","Country":"USA","Awards":"Won 6 Oscars. Another 38 wins & 27 nominations.","Poster":"http://ia.media-imdb.com/images/M/MV5BMTU4NTczODkwM15BMl5BanBnXkFtZTcwMzEyMTIyMw@@._V1_SX300.jpg","Metascore":"92","imdbRating":"8.7","imdbVotes":"822,849","imdbID":"tt0076759","Type":"movie","Response":"True"};
     
-    
-    // --- Using BeforeEach ---
-    
-    // beforeEach(angular.mock.module("omdb"));
-    // 
-    // beforeEach(angular.mock.inject(function(_omdbApi_){
-    //       omdbApi =  _omdbApi_;
-    // }));
-     
-    // --- angular.mock.module and angular.mock.inject are stored in window object so no need to mention them ---.
-    
     beforeEach(module("omdb"));
     
     beforeEach(inject(function(_omdbApi_){
           omdbApi =  _omdbApi_;
     }));
     
-    it("should return serch movie data",function(){
-     //  var omdbApi = {};
-    //    angular.mock.module({
-    //        "omdbApi": {
-    //            search: function(query){
-    //                return movieData;
-    //            }
-    //        }
-    //    });
-    //    angular.mock.module(function ($provide){
-    //        $provide.factory("omdbApi",function() {
-    //            return {
-    //                search: function(query) {
-    //                     return movieData;
-    //                }
-    //            }
-    //        });
-    //    });
-       
-    //    angular.mock.module("omdb");
-    //    
-    //    angular.mock.inject(function(_omdbApi_){
-    //       omdbApi =  _omdbApi_;
-    //    });
-        
+    it("should return serch movie data",function(){    
        expect(omdbApi.search("star wars")).toEqual(movieData);
     });
     
     it("should return movide data by id",function(){
-    //   var omdbApi = {};
-    
-    //    angular.mock.module("omdb");
-    //    
-    //    angular.mock.inject(function(_omdbApi_){
-    //       omdbApi =  _omdbApi_;
-    //    });
-        
        expect(omdbApi.find("tt0076759")).toEqual(movieDataById);
     });
 });
