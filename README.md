@@ -1,5 +1,6 @@
-# movie-app
+# Movie Listing App
 AngularJS Unit Testing using Jasmine, Karma and ngMock
+
 
 Installing Jasmine
 
