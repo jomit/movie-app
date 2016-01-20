@@ -15,3 +15,5 @@ Installing Karma (with Chrome and PhantomJS launcher)
     - karma start karma.conf.js
     - npm install karma-phantomjs-launcher --save-dev
 
+
+Download Angular JS files from [https://code.angularjs.org/1.4.8/] (https://code.angularjs.org/1.4.8/)
