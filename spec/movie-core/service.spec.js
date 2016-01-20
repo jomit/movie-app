@@ -12,6 +12,7 @@ describe("MovieCore", function() {
 
     afterEach(function(){
       $httpBackend.verifyNoOutstandingExpectation();
+      $httpBackend.verifyNoOutstandingRequest();
     })
 
     
@@ -59,6 +60,39 @@ describe("MovieCore", function() {
        });
 
        popularMovie.$update();
+
+      expect($httpBackend.flush).not.toThrow();
+
+    });
+
+
+    it("should authenticate requests",function(){
+      //var headerData = {authToken: 'teddybear', Accept: 'application/json, text/plain, */*'};
+      var headerData = function(headers) {
+        return headers.authToken === 'teddybear';
+      }
+
+      var matchAny = /.*/;
+
+      $httpBackend.whenGET(matchAny, headerData)
+        .respond(200);
+
+      $httpBackend.expectPOST(matchAny, matchAny, headerData)
+        .respond(200);
+
+      $httpBackend.expectPUT(matchAny, matchAny, headerData)
+        .respond(200);
+
+      $httpBackend.expectDELETE(matchAny, headerData)
+        .respond(200);
+
+      var popularMovie = { id: 'tt0076759', description: 'This movie is great!' };
+
+      PopularMovies.query();
+      PopularMovies.get({ id: 'tt0076759' });
+      new PopularMovies(popularMovie).$save();
+      new PopularMovies(popularMovie).$update();
+      new PopularMovies(popularMovie).$remove();
 
       expect($httpBackend.flush).not.toThrow();
 
