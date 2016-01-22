@@ -32,14 +32,23 @@
     beforeEach(module("omdb"));
     beforeEach(module("movieApp"));
 
-    beforeEach(inject(function (_$controller_,
-        _$q_, _$rootScope_, _omdbApi_, _$location_) {
-        $controller = _$controller_;
+    //beforeEach(inject(function (_$controller_,
+    //    _$q_, _$rootScope_, _omdbApi_, _$location_) {
+    //    $controller = _$controller_;
+    //    $scope = {};
+    //    $q = _$q_;
+    //    $rootScope = _$rootScope_;
+    //    omdbApi = _omdbApi_;
+    //    $location = _$location_;
+    //}));
+
+    beforeEach(inject(function ($injector) {
+        $controller = $injector.get("$controller");
         $scope = {};
-        $q = _$q_;
-        $rootScope = _$rootScope_;
-        omdbApi = _omdbApi_;
-        $location = _$location_;
+        $q = $injector.get("$q");
+        $rootScope = $injector.get("$rootScope");
+        omdbApi = $injector.get("omdbApi");
+        $location = $injector.get("$location");
     }));
 
     it("should load search results", function () {
