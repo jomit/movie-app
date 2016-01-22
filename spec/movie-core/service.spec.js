@@ -15,7 +15,6 @@ describe("MovieCore", function() {
       $httpBackend.verifyNoOutstandingRequest();
     })
 
-    
     it("should create popular movie",function(){    
 
       var expectedData = function(data) {
@@ -64,7 +63,6 @@ describe("MovieCore", function() {
       expect($httpBackend.flush).not.toThrow();
 
     });
-
 
     it("should authenticate requests",function(){
       //var headerData = {authToken: 'teddybear', Accept: 'application/json, text/plain, */*'};

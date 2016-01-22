@@ -55,7 +55,6 @@ describe("omdb service", function() {
        expect(response).toEqual("Error!");
     });
 
-
     it("should return movide data by id",function(){
       var response;
 
