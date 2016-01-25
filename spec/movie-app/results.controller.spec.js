@@ -27,9 +27,16 @@
     var $controller;
     var $location;
     var $rootScope;
+    var $exceptionHandler;
     var omdbApi;
+    
 
     beforeEach(module("omdb"));
+
+    beforeEach(module(function ($exceptionHandlerProvider) {
+        $exceptionHandlerProvider.mode("log");  //  'rethrow' or 'log' mode
+    }));
+
     beforeEach(module("movieApp"));
 
     //beforeEach(inject(function (_$controller_,
@@ -49,6 +56,7 @@
         $rootScope = $injector.get("$rootScope");
         omdbApi = $injector.get("omdbApi");
         $location = $injector.get("$location");
+        $exceptionHandler = $injector.get("$exceptionHandler");
     }));
 
     it("should load search results", function () {
@@ -77,14 +85,21 @@
     it("should set result status to error", function () {
         spyOn(omdbApi, "search").and.callFake(function () {
             var deferred = $q.defer();
-            deferred.reject();
+            deferred.reject("Something went wrong!");
             return deferred.promise;
         });
 
         $location.search("q", "star wars");
+
         $controller("ResultsController", { $scope: $scope });
         $rootScope.$apply();
-        expect($scope.errorMessage).toBe("Something went wrong!");
+        //expect($scope.errorMessage).toBe("Something went wrong!");
+        //console.log(angular.mock.dump($exceptionHandler.errors[0]));
+        expect($exceptionHandler.errors).toEqual(['Something went wrong!']);
 
+        //expect(function () {
+        //    $controller("ResultsController", { $scope: $scope });
+        //    $rootScope.$apply();
+        //}).toThrow();
     });
 });
