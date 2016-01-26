@@ -27,6 +27,7 @@
     var omdbApi;
     var PopularMovies;
     var $exceptionHandler;
+    var $log;
 
     beforeEach(module("movieApp"));
 
@@ -42,6 +43,9 @@
         $exceptionHandlerProvider.mode("log");
     }));
 
+    beforeEach(module(function ($logProvider) {
+        $logProvider.debugEnabled(true);
+    }));
 
     beforeEach(inject(function (_$q_, _omdbApi_) {
         spyOn(_omdbApi_, "find").and.callFake(function () {
@@ -64,7 +68,8 @@
     }));
 
     beforeEach(inject(function (_$controller_, _$q_, _$interval_,
-        _$rootScope_, _omdbApi_, _PopularMovies_, _$exceptionHandler_) {
+        _$rootScope_, _omdbApi_, _PopularMovies_, _$exceptionHandler_,
+        _$log_) {
         $scope = {};
         $interval = _$interval_;
         $q = _$q_;
@@ -73,6 +78,7 @@
         omdbApi = _omdbApi_;
         PopularMovies = _PopularMovies_;
         $exceptionHandler = _$exceptionHandler_;
+        $log = _$log_;
     }));
 
     it("should rotate movies every 5 seconds", function () {
@@ -98,6 +104,18 @@
         expect($scope.result.Title).toBe(results[2].Title);
         $interval.flush(5000);
         expect($scope.result.Title).toBe(results[0].Title);
+
+        //$log.reset();
+        //$log.assertEmpty();  //this will throw exception if any of the log level have value
+
+        expect($log.log.logs[0]).toEqual(["standard log"]);
+
+        console.log(angular.mock.dump($log.log.logs));
+        console.log(angular.mock.dump($log.info.logs));
+        console.log(angular.mock.dump($log.error.logs));
+        console.log(angular.mock.dump($log.warn.logs));
+        console.log(angular.mock.dump($log.debug.logs));
+
     });
 
     it("should handle error", function () {

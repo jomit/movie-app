@@ -29,12 +29,16 @@
     var $rootScope;
     var $exceptionHandler;
     var omdbApi;
-    
+    var $log;
 
     beforeEach(module("omdb"));
 
     beforeEach(module(function ($exceptionHandlerProvider) {
         $exceptionHandlerProvider.mode("log");  //  'rethrow' or 'log' mode
+    }));
+
+    beforeEach(module(function ($logProvider) {
+        $logProvider.debugEnabled(true);  //  'rethrow' or 'log' mode
     }));
 
     beforeEach(module("movieApp"));
@@ -57,6 +61,7 @@
         omdbApi = $injector.get("omdbApi");
         $location = $injector.get("$location");
         $exceptionHandler = $injector.get("$exceptionHandler");
+        $log = $injector.get("$log");
     }));
 
     it("should load search results", function () {
@@ -80,6 +85,10 @@
 
         //Make sure that teh search function is called with a specific parameter value
         expect(omdbApi.search).toHaveBeenCalledWith("star wars");
+
+        expect($log.debug.logs[0]).toEqual(["Controller loaded with query :", "star wars"])
+
+        expect($log.debug.logs[1]).toEqual(["data returned for query :", "star wars",results])
     });
 
     it("should set result status to error", function () {

@@ -1,5 +1,11 @@
 ﻿angular.module("movieApp")
-    .controller("HomeController", function ($scope, $interval, omdbApi, PopularMovies, $exceptionHandler) {
+    .controller("HomeController", function ($scope, $interval, omdbApi, PopularMovies, $exceptionHandler, $log) {
+        $log.log("standard log");
+        $log.info("info log");
+        $log.error("error log");
+        $log.warn("warn log");
+        $log.debug("some debug info");
+
         var results = [];
         var idx = 0;
 
@@ -22,5 +28,5 @@
                     ++idx;
                     findMovie(results[idx % results.length]);
                 }, 5000);
-            });
+        });
     });

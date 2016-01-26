@@ -1,4 +1,4 @@
-﻿angular.module("movieApp", ["ui.bootstrap", "ngRoute", "omdb","movieCore"])
+﻿angular.module("movieApp", ["ui.bootstrap", "ngRoute", "omdb", "movieCore"])
        .config(function ($routeProvider) {
            $routeProvider
                .when("/", {
@@ -12,4 +12,7 @@
                .otherwise({
                    redirectTo: "/"
                });
+       })
+       .config(function ($logProvider) {
+           $logProvider.debugEnabled(true);
        });
